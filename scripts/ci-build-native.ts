@@ -59,6 +59,10 @@ async function main(): Promise<void> {
 				...Bun.env,
 				RUSTFLAGS: variant.rustflags,
 				TARGET_VARIANT: variant.name,
+				// Each variant gets its own target dir: a RUSTFLAGS change invalidates every
+				// crate's fingerprint, so a shared dir rebuilds everything for each variant
+				// and the rust-cache entry only ever holds the last variant built.
+				CARGO_TARGET_DIR: path.join(Bun.env.CARGO_TARGET_DIR ?? path.join(repoRoot, "target"), variant.name),
 			},
 			variant.name,
 		);
