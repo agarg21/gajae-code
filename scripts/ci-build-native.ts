@@ -34,6 +34,7 @@ function parseTargetVariants(): NativeBuildVariant[] {
 	});
 }
 
+// measurement baseline: same file touched as the fix arm
 async function runNativeBuild(env: Record<string, string | undefined>, label: string): Promise<void> {
 	if (isDryRun) {
 		const variant = env.TARGET_VARIANT ? ` TARGET_VARIANT=${env.TARGET_VARIANT}` : "";
